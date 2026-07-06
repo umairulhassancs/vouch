@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# agents and workspace temp
+.agents/
+/scratch/
+print-tree.js
+logo1*.png
+
