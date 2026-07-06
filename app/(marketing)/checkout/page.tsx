@@ -11,7 +11,7 @@ import { useAuth } from '@/hooks';
 export default function CheckoutPage() {
   const router = useRouter();
   const { items, getSubtotal, getShippingFee, getTotal, clearCart } = useCartStore();
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, isLoading } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({
     name: '',
@@ -24,6 +24,13 @@ export default function CheckoutPage() {
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  // Redirect to login if not authenticated and auth state has resolved
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      router.replace('/login?returnUrl=/checkout');
+    }
+  }, [isLoading, isAuthenticated, router]);
 
   // Pre-fill email from logged-in user so orders are reliably linked to their account
   useEffect(() => {
@@ -90,6 +97,16 @@ export default function CheckoutPage() {
       setIsSubmitting(false);
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen pt-32 flex flex-col items-center justify-center bg-background">
+        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+        <p className="mt-4 text-sm text-muted-foreground font-medium">Verifying account security...</p>
+      </div>
+    );
+  }
+
   if (items.length === 0) {
     return (
       <div className="min-h-screen pt-32 text-center px-4">

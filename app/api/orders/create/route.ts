@@ -11,7 +11,7 @@ const createOrderSchema = z.object({
     city: z.string().min(1),
     postalCode: z.string().min(1),
   }),
-  userId: z.string().nullable().optional(),
+  userId: z.string().min(1),
   items: z.array(
     z.object({
       productSlug: z.string().min(1),

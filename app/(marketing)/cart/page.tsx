@@ -6,9 +6,11 @@ import { ArrowLeft, ArrowRight, Plus, Minus, Trash2, ShoppingCart } from 'lucide
 import { motion } from 'framer-motion';
 import { useCartStore } from '@/store/cartStore';
 import { formatPrice } from '@/lib/utils';
+import { useAuth } from '@/hooks';
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, getSubtotal, getShippingFee, getTotal } = useCartStore();
+  const { isAuthenticated } = useAuth();
 
   return (
     <div className="min-h-screen pt-24 pb-24">
@@ -134,10 +136,10 @@ export default function CartPage() {
                 </div>
 
                 <Link
-                  href="/checkout"
+                  href={isAuthenticated ? "/checkout" : "/login?returnUrl=/checkout"}
                   className="flex items-center justify-center gap-2 w-full py-3.5 bg-primary text-on-primary rounded-xl font-semibold hover:bg-primary/90 transition-all active:scale-[0.97] shadow-lg shadow-primary/25"
                 >
-                  Proceed to Checkout
+                  {isAuthenticated ? 'Proceed to Checkout' : 'Sign In to Checkout'}
                   <ArrowRight className="w-4 h-4" />
                 </Link>
 
