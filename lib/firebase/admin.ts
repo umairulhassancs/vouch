@@ -1,5 +1,5 @@
 import { getApps, initializeApp, cert } from 'firebase-admin/app';
-import { getFirestore } from 'firebase-admin/firestore';
+import { getFirestore, FieldValue as AdminFieldValue } from 'firebase-admin/firestore';
 import { getAuth } from 'firebase-admin/auth';
 import { getMessaging } from 'firebase-admin/messaging';
 
@@ -20,6 +20,7 @@ let adminApp: any = null;
 let adminDb: any = null;
 let adminAuth: any = null;
 let adminMessaging: any = null;
+let FieldValue: any = null;
 
 const hasAdminCreds = !!(
   process.env.FIREBASE_ADMIN_PROJECT_ID &&
@@ -43,6 +44,7 @@ if (hasAdminCreds) {
     adminDb = getFirestore(adminApp);
     adminAuth = getAuth(adminApp);
     adminMessaging = getMessaging(adminApp);
+    FieldValue = AdminFieldValue;
   } catch (err) {
     console.error('Failed to initialize real Firebase Admin SDK:', err);
   }
@@ -186,6 +188,11 @@ if (!adminDb || !adminAuth || !adminMessaging) {
       responses: [],
     }),
   };
+
+  FieldValue = FieldValue || {
+    serverTimestamp: () => ({ _methodName: 'serverTimestamp' }),
+    increment: (operand: number = 1) => ({ _methodName: 'increment', operand }),
+  };
 }
 
-export { adminApp, adminDb, adminAuth, adminMessaging };
+export { adminApp, adminDb, adminAuth, adminMessaging, FieldValue };

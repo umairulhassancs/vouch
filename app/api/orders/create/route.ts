@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { adminDb } from '@/lib/firebase/admin';
-import { FieldValue } from 'firebase-admin/firestore';
+import { adminDb, FieldValue } from '@/lib/firebase/admin';
 import { z } from 'zod';
 
 const createOrderSchema = z.object({

@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { adminDb, adminMessaging } from '@/lib/firebase/admin';
-import { FieldValue } from 'firebase-admin/firestore';
+import { adminDb, adminMessaging, FieldValue } from '@/lib/firebase/admin';
 import { sendEmail, sendSMS } from '@/lib/notifications';
 
 export async function POST(request: NextRequest) {

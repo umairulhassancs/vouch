@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { adminDb, adminAuth } from '@/lib/firebase/admin';
-import { FieldValue } from 'firebase-admin/firestore';
+import { adminDb, adminAuth, FieldValue } from '@/lib/firebase/admin';
 import { cookies } from 'next/headers';
 
 export async function POST(request: NextRequest) {
