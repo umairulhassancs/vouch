@@ -9,7 +9,7 @@ export const products: Product[] = [
     tagline: 'Stick on anything. Never lose it.',
     description:
       'The most versatile way to protect your belongings. Our ultra-thin, weatherproof QR stickers adhere to any surface — wallets, laptops, water bottles, luggage, passports, and more. No battery, no charging, no bulk. Just peel, stick, and your item is protected for life.',
-    price: 299,
+    price: 199,
     originalPrice: 499,
     productType: 'sticker',
     features: [
@@ -49,7 +49,7 @@ export const products: Product[] = [
     tagline: 'Your keys, always findable.',
     description:
       'The flagship Vouch product. A beautifully crafted keychain with an embedded QR code that connects your keys to you — without exposing your personal information. Premium zinc-alloy build, satisfying weight, and a QR code that scans perfectly every time. The keychain that pays for itself the first time it saves you from losing your keys.',
-    price: 799,
+    price: 299,
     originalPrice: 1199,
     productType: 'classic',
     features: [
@@ -156,7 +156,7 @@ export const products: Product[] = [
     tagline: 'Track, ring, and recover.',
     description:
       'The ultimate Vouch product. Combines a Bluetooth alarm (ring it from the app or website), real-time GPS tracking, and the same QR code system that powers our entire lineup. When you misplace your keys at home, ring the keychain. When you lose them outside, track their last known location on a map. And if a stranger finds them, the QR code connects them to you privately.',
-    price: 2499,
+    price: 2999,
     originalPrice: 3499,
     productType: 'gps',
     features: [
@@ -230,7 +230,7 @@ export const mockReviews: Review[] = [
     createdAt: '2025-06-10T14:20:00Z',
     reviewerName: 'Sara Khan',
     rating: 5,
-    text: 'I stuck these on my laptop, wallet, and passport case. The stickers are incredibly thin — you barely notice them. Peace of mind for Rs. 299 is a no-brainer.',
+    text: 'I stuck these on my laptop, wallet, and passport case. The stickers are incredibly thin — you barely notice them. Peace of mind for Rs. 199 is a no-brainer.',
     verifiedPurchase: true,
   },
   {

@@ -22,10 +22,10 @@ const createOrderSchema = z.object({
 });
 
 const PRODUCT_METADATA: Record<string, { name: string; price: number; productType: string }> = {
-  'qr-sticker': { name: 'QR Sticker', price: 299, productType: 'sticker' },
-  'classic-keychain': { name: 'Classic Keychain', price: 799, productType: 'classic' },
+  'qr-sticker': { name: 'QR Sticker', price: 199, productType: 'sticker' },
+  'classic-keychain': { name: 'Classic Keychain', price: 299, productType: 'classic' },
   'whistle-keychain': { name: 'Whistle Keychain', price: 1299, productType: 'whistle' },
-  'gps-ring-keychain': { name: 'GPS Ring Keychain', price: 2499, productType: 'gps' },
+  'gps-ring-keychain': { name: 'GPS Ring Keychain', price: 2999, productType: 'gps' },
 };
 
 export async function POST(request: NextRequest) {
