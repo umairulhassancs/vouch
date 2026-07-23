@@ -19,7 +19,20 @@ export async function POST(request: NextRequest) {
     }
 
     const itemData = itemSnap.data();
-    if (!itemData || !itemData.isActive) {
+    if (!itemData) {
+      return NextResponse.json({ error: 'This Vouch QR code is not registered or active.' }, { status: 404 });
+    }
+
+    // Check if the item has no owner yet (unassigned QR sticker)
+    if (itemData.ownerId === null) {
+      return NextResponse.json({
+        success: true,
+        isUnassigned: true,
+        qrCode: uppercaseCode,
+      });
+    }
+
+    if (!itemData.isActive) {
       return NextResponse.json({ error: 'This item has been deactivated by the owner.' }, { status: 400 });
     }
 
@@ -28,8 +41,8 @@ export async function POST(request: NextRequest) {
 
     const timestamp = FieldValue.serverTimestamp();
 
-    // 1. Log the scan under /items/{itemId}/scans/{scanId}
-    const scanRef = itemRef.collection('scans').doc(scanId);
+    // 1. Log the scan under /scans/{scanId}
+    const scanRef = adminDb.collection('scans').doc(scanId);
     const hasLocation = location && location.permissionGranted;
     
     await scanRef.set({

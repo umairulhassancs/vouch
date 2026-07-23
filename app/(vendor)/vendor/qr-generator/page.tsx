@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { QrCode, RefreshCw, Printer, CheckCircle2, ShieldAlert, Database, Download } from 'lucide-react';
+import { VouchLogo } from '@/components/ui/VouchLogo';
 
 // Generate a random 4-char alphanumeric chunk (no ambiguous chars)
 function generateChunk() {
@@ -210,14 +211,18 @@ export default function VendorQRGenerator() {
                 </div>
 
                 {/* QR Code image */}
-                <div className="my-2 p-1 bg-white border border-black/5 rounded-lg">
+                <div className="relative my-2 p-1 bg-white border border-black/5 rounded-lg flex items-center justify-center">
                   <img
-                    src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://vouch.pk/scan/${code}`}
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&ecc=H&data=https://vouch-six-ebon.vercel.app/scan/${code}`}
                     alt={code}
                     width="80"
                     height="80"
                     className="w-20 h-20 print:w-20 print:h-20"
                   />
+                  {/* Logo overlay badge */}
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-0.5 rounded-full shadow-[0_1px_3px_rgba(0,0,0,0.15)] flex items-center justify-center w-5 h-5 print:w-5 print:h-5">
+                    <VouchLogo markOnly variant="light" height={12} className="w-3 h-3" />
+                  </div>
                 </div>
 
                 {/* Info Text & Unique Code */}

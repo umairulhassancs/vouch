@@ -1,21 +1,23 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Mail, Lock, Eye, EyeOff, User, ArrowRight, ShieldCheck, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { registerWithEmail, verifyEmail, signInWithGoogle } from '@/lib/firebase/auth';
 import { db } from '@/lib/firebase/client';
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 
-export default function SignupPage() {
+function SignupFormControl() {
   const [form, setForm] = useState({ name: '', email: '', password: '', confirmPassword: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [generalError, setGeneralError] = useState<string | null>(null);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const returnUrl = searchParams.get('returnUrl') || '/dashboard';
 
   const handleGoogleSignUp = async () => {
     setIsLoading(true);
@@ -45,7 +47,7 @@ export default function SignupPage() {
           itemCount: 0,
         });
       }
-      router.push('/dashboard');
+      router.push(returnUrl);
     } catch (err: any) {
       console.error('Google sign-up error:', err);
       if (err.code !== 'auth/popup-closed-by-user') {
@@ -100,7 +102,7 @@ export default function SignupPage() {
         console.error('Error sending verification email during signup:', verificationError);
       }
 
-      router.push('/verify-email');
+      router.push(`/verify-email?returnUrl=${encodeURIComponent(returnUrl)}`);
     } catch (err: any) {
       console.error('Signup error details:', err);
       let message = 'An unexpected error occurred. Please try again.';
@@ -285,9 +287,21 @@ export default function SignupPage() {
 
         <p className="text-center text-sm text-muted-foreground">
           Already have an account?{' '}
-          <Link href="/login" className="text-primary font-medium hover:underline">Sign in</Link>
+          <Link href={`/login?returnUrl=${encodeURIComponent(returnUrl)}`} className="text-primary font-medium hover:underline">Sign in</Link>
         </p>
       </div>
     </motion.div>
+  );
+}
+
+export default function SignupPage() {
+  return (
+    <Suspense fallback={
+      <div className="w-full max-w-md bg-surface-elevated border border-border/50 p-8 rounded-3xl shadow-2xl h-[500px] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+      </div>
+    }>
+      <SignupFormControl />
+    </Suspense>
   );
 }

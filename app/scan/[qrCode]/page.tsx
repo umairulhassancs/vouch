@@ -80,6 +80,12 @@ export default function ScanPage({ params }: { params: Promise<{ qrCode: string 
         }
 
         const data = await res.json();
+
+        if (data.isUnassigned) {
+          window.location.href = `/activate/${qrCode}`;
+          return;
+        }
+
         const returnedScanId = data.scanId || 'SCN-' + Math.random().toString(36).substring(2, 11).toUpperCase();
 
         setItem(data.item);

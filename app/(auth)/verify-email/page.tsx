@@ -1,15 +1,19 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
-import { Mail, CheckCircle, RefreshCw, AlertCircle } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
+import { Mail, CheckCircle, RefreshCw, AlertCircle, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { verifyEmail } from '@/lib/firebase/auth';
 
-export default function VerifyEmailPage() {
+function VerifyEmailFormControl() {
   const [resent, setResent] = useState(false);
   const [countdown, setCountdown] = useState(0);
   const [error, setError] = useState<string | null>(null);
+
+  const searchParams = useSearchParams();
+  const returnUrl = searchParams.get('returnUrl') || '/dashboard';
 
   const handleResend = async () => {
     setError(null);
@@ -50,7 +54,7 @@ export default function VerifyEmailPage() {
         </p>
 
         {/* Steps */}
-        <div className="text-left space-y-3 mb-8 p-4 rounded-xl bg-surface border border-border/30">
+        <div className="text-left space-y-3 mb-6 p-4 rounded-xl bg-surface border border-border/30">
           {[
             'Open your email inbox',
             'Find the email from Vouch',
@@ -73,21 +77,31 @@ export default function VerifyEmailPage() {
         )}
 
         {/* Resend */}
-        {resent ? (
-          <div className="flex items-center justify-center gap-2 text-sm text-success mb-4">
-            <CheckCircle className="w-4 h-4" />
-            Email resent!
-            {countdown > 0 && <span className="text-muted-foreground">({countdown}s)</span>}
-          </div>
-        ) : (
-          <button
-            onClick={handleResend}
-            className="inline-flex items-center gap-2 text-sm text-primary hover:underline cursor-pointer mb-4"
-          >
-            <RefreshCw className="w-4 h-4" />
-            Resend verification email
-          </button>
-        )}
+        <div className="mb-6">
+          {resent ? (
+            <div className="flex items-center justify-center gap-2 text-sm text-success mb-2">
+              <CheckCircle className="w-4 h-4" />
+              Email resent!
+              {countdown > 0 && <span className="text-muted-foreground">({countdown}s)</span>}
+            </div>
+          ) : (
+            <button
+              onClick={handleResend}
+              className="inline-flex items-center gap-2 text-sm text-primary hover:underline cursor-pointer mb-2"
+            >
+              <RefreshCw className="w-4 h-4" />
+              Resend verification email
+            </button>
+          )}
+        </div>
+
+        {/* Proceed Button */}
+        <Link
+          href={returnUrl}
+          className="flex items-center justify-center gap-2 w-full py-3.5 bg-primary text-on-primary rounded-xl font-semibold hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 mb-6"
+        >
+          Once Verified, Continue <ArrowRight className="w-4 h-4" />
+        </Link>
 
         <p className="text-xs text-muted-foreground">
           Wrong email?{' '}
@@ -95,5 +109,17 @@ export default function VerifyEmailPage() {
         </p>
       </div>
     </motion.div>
+  );
+}
+
+export default function VerifyEmailPage() {
+  return (
+    <Suspense fallback={
+      <div className="w-full max-w-md bg-surface-elevated border border-border/50 p-8 rounded-3xl shadow-2xl h-[400px] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+      </div>
+    }>
+      <VerifyEmailFormControl />
+    </Suspense>
   );
 }

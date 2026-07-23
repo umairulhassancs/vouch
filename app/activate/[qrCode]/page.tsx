@@ -4,6 +4,10 @@ import { QrCode, ArrowRight } from 'lucide-react';
 
 export default async function ActivateQRPage({ params }: { params: Promise<{ qrCode: string }> }) {
   const { qrCode } = await params;
+  const returnUrl = encodeURIComponent(`/items/activate?code=${qrCode}`);
+  const loginUrl = `/login?returnUrl=${returnUrl}`;
+  const signupUrl = `/signup?returnUrl=${returnUrl}`;
+
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-sm text-center">
@@ -18,10 +22,10 @@ export default async function ActivateQRPage({ params }: { params: Promise<{ qrC
           Log in or create a free account to link this QR code to your item.
         </p>
         <div className="space-y-3">
-          <Link href="/login" className="flex items-center justify-center gap-2 w-full py-3.5 bg-primary text-on-primary rounded-xl font-semibold hover:bg-primary/90 transition-all shadow-lg shadow-primary/25">
+          <Link href={loginUrl} className="flex items-center justify-center gap-2 w-full py-3.5 bg-primary text-on-primary rounded-xl font-semibold hover:bg-primary/90 transition-all shadow-lg shadow-primary/25">
             Log In to Activate <ArrowRight className="w-4 h-4" />
           </Link>
-          <Link href="/signup" className="flex items-center justify-center gap-2 w-full py-3.5 border border-border text-foreground rounded-xl font-semibold hover:bg-surface-overlay transition-all">
+          <Link href={signupUrl} className="flex items-center justify-center gap-2 w-full py-3.5 border border-border text-foreground rounded-xl font-semibold hover:bg-surface-overlay transition-all">
             Create Free Account
           </Link>
         </div>

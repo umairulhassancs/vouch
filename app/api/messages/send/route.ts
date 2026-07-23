@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
     });
 
     // 3. Update the scan document referencing the message
-    const scanRef = itemRef.collection('scans').doc(scanId);
+    const scanRef = adminDb.collection('scans').doc(scanId);
     await scanRef.update({
       hasMessage: true,
       messageId,
