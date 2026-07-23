@@ -204,8 +204,9 @@ export const products: Product[] = [
     ],
     rating: 4.9,
     reviewCount: 89,
-    badge: 'Premium',
-    inStock: true,
+    badge: 'Coming Soon',
+    inStock: false,
+    comingSoon: true,
   },
 ];
 

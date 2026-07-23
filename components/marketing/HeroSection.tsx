@@ -105,7 +105,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
+    <section className="relative lg:min-h-screen flex items-center overflow-hidden py-4 xs:py-6 lg:py-0">
       {/* Background effects */}
       <div className="absolute inset-0 bg-[#06060B]" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_-20%,rgba(108,92,231,0.15),transparent_60%)]" />
@@ -121,12 +121,13 @@ export function HeroSection() {
         }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-24 lg:pt-0">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[calc(100vh-80px)]">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-20 xs:pt-24 sm:pt-24 lg:pt-0">
+        <div className="grid grid-cols-2 gap-4 sm:gap-8 lg:gap-12 items-center lg:min-h-[calc(100vh-80px)]">
           {/* Left: Copy */}
-          <div className="space-y-8">
+          <div className="space-y-3 xs:space-y-4 sm:space-y-8">
             {/* Pill badge */}
             <motion.div
+              className="hidden sm:block"
               initial={{ opacity: 0, y: 20 }}
               animate={isVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.1 }}
@@ -138,11 +139,11 @@ export function HeroSection() {
             </motion.div>
 
             {/* Headline */}
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight font-[family-name:var(--font-display)]">
+            <h1 className="text-xl xs:text-2xl sm:text-4xl md:text-5xl lg:text-7xl font-bold leading-[1.1] tracking-tight font-[family-name:var(--font-display)]">
               {headlineWords.map((word, i) => (
                 <motion.span
                   key={word}
-                  className={`inline-block mr-4 ${
+                  className={`inline-block mr-1 xs:mr-2 sm:mr-4 ${
                     i === 0 || i === 3 ? 'text-gradient' : ''
                   }`}
                   initial={{ opacity: 0, y: 60 }}
@@ -160,7 +161,7 @@ export function HeroSection() {
 
             {/* Subheadline */}
             <motion.p
-              className="text-lg sm:text-xl text-muted-foreground max-w-lg leading-relaxed"
+              className="text-[10px] xs:text-xs sm:text-base md:text-lg lg:text-xl text-muted-foreground max-w-lg leading-normal xs:leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               animate={isVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.7 }}
@@ -171,30 +172,30 @@ export function HeroSection() {
 
             {/* CTAs */}
             <motion.div
-              className="flex flex-wrap gap-4"
+              className="flex flex-col sm:flex-row gap-2 sm:gap-4"
               initial={{ opacity: 0, y: 20 }}
               animate={isVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.9 }}
             >
               <Link
                 href="/products"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-on-primary rounded-xl font-semibold text-base hover:bg-primary/90 transition-all duration-200 active:scale-[0.97] shadow-lg shadow-primary/30 group"
+                className="inline-flex items-center justify-center gap-1.5 px-3 py-2 xs:px-4 xs:py-2.5 sm:px-8 sm:py-4 bg-primary text-on-primary rounded-lg xs:rounded-xl font-semibold text-xs xs:text-sm sm:text-base hover:bg-primary/90 transition-all duration-200 active:scale-[0.97] shadow-lg shadow-primary/30 group"
               >
                 Shop Now
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                <ArrowRight className="w-3 h-3 xs:w-4 xs:h-4 group-hover:translate-x-0.5 transition-transform" />
               </Link>
               <a
                 href="#how-it-works"
-                className="inline-flex items-center gap-2 px-8 py-4 border border-border text-foreground rounded-xl font-semibold text-base hover:bg-surface-overlay transition-all duration-200 active:scale-[0.97] group"
+                className="inline-flex items-center justify-center gap-1.5 px-3 py-2 xs:px-4 xs:py-2.5 sm:px-8 sm:py-4 border border-border text-foreground rounded-lg xs:rounded-xl font-semibold text-xs xs:text-sm sm:text-base hover:bg-surface-overlay transition-all duration-200 active:scale-[0.97] group"
               >
-                See How It Works
-                <ChevronDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
+                See How
+                <ChevronDown className="w-3 h-3 xs:w-4 xs:h-4 group-hover:translate-y-0.5 transition-transform" />
               </a>
             </motion.div>
 
             {/* Mini trust */}
             <motion.div
-              className="flex items-center gap-6 pt-4"
+              className="hidden sm:flex items-center gap-6 pt-4"
               initial={{ opacity: 0 }}
               animate={isVisible ? { opacity: 1 } : {}}
               transition={{ duration: 0.8, delay: 1.1 }}
@@ -217,7 +218,7 @@ export function HeroSection() {
 
           {/* Right: 3D Scene */}
           <motion.div
-            className="relative h-[400px] sm:h-[500px] lg:h-[600px] overflow-hidden mt-8 lg:mt-16"
+            className="relative h-[200px] xs:h-[250px] sm:h-[450px] lg:h-[600px] overflow-hidden mt-0 lg:mt-16 flex items-center justify-center w-full"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={isVisible ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 1, delay: 0.5 }}
@@ -233,7 +234,7 @@ export function HeroSection() {
 
       {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:block"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.5, duration: 0.8 }}

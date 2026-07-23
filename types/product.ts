@@ -23,6 +23,7 @@ export interface Product {
   reviewCount: number;
   badge?: string;
   inStock: boolean;
+  comingSoon?: boolean;
 }
 
 export interface CartItem {

@@ -6,7 +6,7 @@ import { ArrowRight, Shield, Truck, CreditCard } from 'lucide-react';
 
 export function CTASection() {
   return (
-    <section className="relative py-24 sm:py-32 overflow-hidden">
+    <section className="relative py-12 xs:py-16 sm:py-24 md:py-32 overflow-hidden">
       <div className="absolute inset-0 bg-surface" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_50%,rgba(108,92,231,0.12),transparent_50%)]" />
 

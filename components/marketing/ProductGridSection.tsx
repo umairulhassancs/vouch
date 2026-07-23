@@ -94,13 +94,13 @@ export function ProductGridSection() {
   };
 
   return (
-    <section ref={sectionRef} className="relative py-24 sm:py-32">
+    <section ref={sectionRef} className="relative py-10 xs:py-14 sm:py-24 md:py-32">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_50%,rgba(0,184,148,0.04),transparent_60%)]" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-8 xs:mb-12 sm:mb-16"
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
@@ -117,7 +117,7 @@ export function ProductGridSection() {
         </motion.div>
 
         {/* Product grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {products.map((product, i) => (
             <motion.div
               key={product.slug}
@@ -133,13 +133,13 @@ export function ProductGridSection() {
             >
               {/* Badge */}
               {product.badge && (
-                <div className="absolute top-4 right-4 z-10">
+                <div className="absolute top-2.5 right-2.5 xs:top-4 xs:right-4 z-10 scale-90 xs:scale-100">
                   <Badge className={getBadgeStyles(product.productType)}>{product.badge}</Badge>
                 </div>
               )}
 
               {/* Image area */}
-              <div className="relative h-52 overflow-hidden bg-black">
+              <div className="relative h-32 xs:h-40 sm:h-48 md:h-52 overflow-hidden bg-black">
                 <CardImageShowcase
                   images={
                     product.slug === 'whistle-keychain'
@@ -153,81 +153,91 @@ export function ProductGridSection() {
               </div>
 
               {/* Content */}
-              <div className="p-5">
-                <div className="flex items-center gap-1.5 mb-2">
+              <div className="p-3 xs:p-5">
+                <div className="flex items-center gap-1 mb-1.5 xs:mb-2">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <Star
                       key={star}
-                      className={`w-3.5 h-3.5 ${
+                      className={`w-2.5 h-2.5 xs:w-3.5 xs:h-3.5 ${
                         star <= Math.round(product.rating)
                           ? 'fill-warning text-warning'
                           : 'text-muted'
                       }`}
                     />
                   ))}
-                  <span className="text-xs text-muted-foreground ml-1">
+                  <span className="text-[10px] xs:text-xs text-muted-foreground ml-0.5 xs:ml-1">
                     ({product.reviewCount})
                   </span>
                 </div>
 
-                <h3 className="text-lg font-semibold font-[family-name:var(--font-display)] mb-1 group-hover:text-primary transition-colors duration-300">
+                <h3 className="text-sm xs:text-lg font-semibold font-[family-name:var(--font-display)] mb-0.5 xs:mb-1 group-hover:text-primary transition-colors duration-300 truncate">
                   {product.name}
                 </h3>
-                <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                <p className="text-[11px] xs:text-sm text-muted-foreground mb-3 xs:mb-4 line-clamp-1 sm:line-clamp-2">
                   {product.tagline}
                 </p>
 
                 {/* Price */}
-                <div className="flex items-baseline gap-2 mb-4">
-                  <span className="text-2xl font-bold text-foreground">
+                <div className="flex items-baseline gap-1.5 xs:gap-2 mb-3 xs:mb-4">
+                  <span className="text-base xs:text-2xl font-bold text-foreground">
                     {formatPrice(product.price)}
                   </span>
                   {product.originalPrice && (
-                    <span className="text-sm text-muted-foreground line-through">
+                    <span className="text-xs xs:text-sm text-muted-foreground line-through">
                       {formatPrice(product.originalPrice)}
                     </span>
                   )}
                 </div>
 
                 {/* Actions */}
-                <div className="flex gap-2">
-                  <motion.button
-                    onClick={() => handleAdd(product)}
-                    className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-primary text-on-primary rounded-xl text-sm font-semibold hover:bg-primary/90 transition-all cursor-pointer shadow-lg shadow-primary/20"
-                    whileTap={{ scale: 0.96 }}
-                  >
-                    <AnimatePresence mode="wait">
-                      {addedSlug === product.slug ? (
-                        <motion.span
-                          key="check"
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          exit={{ scale: 0 }}
-                          className="flex items-center gap-1"
-                        >
-                          <Check className="w-4 h-4" />
-                          Added!
-                        </motion.span>
-                      ) : (
-                        <motion.span
-                          key="cart"
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          exit={{ scale: 0 }}
-                          className="flex items-center gap-1"
-                        >
-                          <ShoppingCart className="w-4 h-4" />
-                          Add to Cart
-                        </motion.span>
-                      )}
-                    </AnimatePresence>
-                  </motion.button>
+                <div className="flex gap-1.5 xs:gap-2">
+                  {product.comingSoon ? (
+                    <motion.button
+                      onClick={() => alert(`${product.name} is coming soon and is not available for purchase yet!`)}
+                      className="flex-1 flex items-center justify-center gap-1 py-1.5 px-2 xs:py-2.5 xs:px-3 bg-muted text-muted-foreground border border-border rounded-lg xs:rounded-xl text-[11px] xs:text-sm font-semibold hover:bg-muted/80 transition-all cursor-pointer"
+                      whileTap={{ scale: 0.96 }}
+                    >
+                      Coming Soon
+                    </motion.button>
+                  ) : (
+                    <motion.button
+                      onClick={() => handleAdd(product)}
+                      className="flex-1 flex items-center justify-center gap-1 py-1.5 px-2 xs:py-2.5 xs:px-3 bg-primary text-on-primary rounded-lg xs:rounded-xl text-[11px] xs:text-sm font-semibold hover:bg-primary/90 transition-all cursor-pointer shadow-lg shadow-primary/30"
+                      whileTap={{ scale: 0.96 }}
+                    >
+                      <AnimatePresence mode="wait">
+                        {addedSlug === product.slug ? (
+                          <motion.span
+                            key="check"
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            exit={{ scale: 0 }}
+                            className="flex items-center gap-0.5 xs:gap-1"
+                          >
+                            <Check className="w-3 h-3 xs:w-4 xs:h-4" />
+                            Added!
+                          </motion.span>
+                        ) : (
+                          <motion.span
+                            key="cart"
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            exit={{ scale: 0 }}
+                            className="flex items-center gap-0.5 xs:gap-1"
+                          >
+                            <ShoppingCart className="w-3 h-3 xs:w-4 xs:h-4" />
+                            Add
+                          </motion.span>
+                        )}
+                      </AnimatePresence>
+                    </motion.button>
+                  )}
                   <Link
                     href={`/products/${product.slug}`}
-                    className="flex items-center justify-center w-11 rounded-xl border border-border hover:border-primary/30 hover:bg-primary/5 transition-all duration-300 group/arrow"
+                    className="flex items-center justify-center w-8 h-8 xs:w-11 xs:h-11 rounded-lg xs:rounded-xl border border-border hover:border-primary/30 hover:bg-primary/5 transition-all duration-300 group/arrow"
                     aria-label={`View ${product.name} details`}
                   >
-                    <ArrowRight className="w-4 h-4 group-hover/arrow:translate-x-0.5 transition-transform" />
+                    <ArrowRight className="w-3.5 h-3.5 xs:w-4 xs:h-4 group-hover/arrow:translate-x-0.5 transition-transform" />
                   </Link>
                 </div>
               </div>

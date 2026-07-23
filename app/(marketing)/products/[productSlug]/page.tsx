@@ -198,43 +198,55 @@ export default function ProductDetailPage() {
 
             {/* Quantity + Add to Cart */}
             <div className="flex items-center gap-4 mb-6">
-              <div className="flex items-center border border-border rounded-xl overflow-hidden">
-                <button
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="px-4 py-3 hover:bg-surface-overlay transition-colors cursor-pointer"
-                  aria-label="Decrease quantity"
+              {product.comingSoon ? (
+                <motion.button
+                  onClick={() => alert(`${product.name} is coming soon and is not available for purchase yet!`)}
+                  className="flex-1 flex items-center justify-center gap-2 py-3.5 bg-muted text-muted-foreground border border-border rounded-xl font-semibold hover:bg-muted/80 transition-all cursor-pointer"
+                  whileTap={{ scale: 0.96 }}
                 >
-                  <Minus className="w-4 h-4" />
-                </button>
-                <span className="px-4 py-3 text-sm font-semibold min-w-[3rem] text-center">
-                  {quantity}
-                </span>
-                <button
-                  onClick={() => setQuantity(quantity + 1)}
-                  className="px-4 py-3 hover:bg-surface-overlay transition-colors cursor-pointer"
-                  aria-label="Increase quantity"
-                >
-                  <Plus className="w-4 h-4" />
-                </button>
-              </div>
+                  Coming Soon
+                </motion.button>
+              ) : (
+                <>
+                  <div className="flex items-center border border-border rounded-xl overflow-hidden">
+                    <button
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      className="px-4 py-3 hover:bg-surface-overlay transition-colors cursor-pointer"
+                      aria-label="Decrease quantity"
+                    >
+                      <Minus className="w-4 h-4" />
+                    </button>
+                    <span className="px-4 py-3 text-sm font-semibold min-w-[3rem] text-center">
+                      {quantity}
+                    </span>
+                    <button
+                      onClick={() => setQuantity(quantity + 1)}
+                      className="px-4 py-3 hover:bg-surface-overlay transition-colors cursor-pointer"
+                      aria-label="Increase quantity"
+                    >
+                      <Plus className="w-4 h-4" />
+                    </button>
+                  </div>
 
-              <motion.button
-                onClick={handleAddToCart}
-                className="flex-1 flex items-center justify-center gap-2 py-3.5 bg-primary text-on-primary rounded-xl font-semibold hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 cursor-pointer"
-                whileTap={{ scale: 0.96 }}
-              >
-                {added ? (
-                  <>
-                    <Check className="w-5 h-5" />
-                    Added!
-                  </>
-                ) : (
-                  <>
-                    <ShoppingCart className="w-5 h-5" />
-                    Add to Cart — {formatPrice(product.price * quantity)}
-                  </>
-                )}
-              </motion.button>
+                  <motion.button
+                    onClick={handleAddToCart}
+                    className="flex-1 flex items-center justify-center gap-2 py-3.5 bg-primary text-on-primary rounded-xl font-semibold hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 cursor-pointer"
+                    whileTap={{ scale: 0.96 }}
+                  >
+                    {added ? (
+                      <>
+                        <Check className="w-5 h-5" />
+                        Added!
+                      </>
+                    ) : (
+                      <>
+                        <ShoppingCart className="w-5 h-5" />
+                        Add to Cart — {formatPrice(product.price * quantity)}
+                      </>
+                    )}
+                  </motion.button>
+                </>
+              )}
             </div>
 
             <p className="text-sm text-muted-foreground mb-8">
@@ -423,24 +435,26 @@ export default function ProductDetailPage() {
           <h2 className="text-2xl font-bold font-[family-name:var(--font-display)] mb-8">
             You Might Also Like
           </h2>
-          <div className="grid sm:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             {relatedProducts.map((rp) => (
               <Link
                 key={rp.slug}
                 href={`/products/${rp.slug}`}
-                className="group p-5 rounded-2xl bg-surface-elevated border border-border/50 hover:border-primary/30 transition-all"
+                className="group p-3 xs:p-5 rounded-2xl bg-surface-elevated border border-border/50 hover:border-primary/30 transition-all flex flex-col justify-between"
               >
-                <div className="h-32 w-full rounded-xl overflow-hidden bg-surface flex items-center justify-center mb-4">
-                  <img
-                    src={rp.imageUrl}
-                    alt={rp.name}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 pointer-events-none select-none"
-                    draggable="false"
-                  />
+                <div>
+                  <div className="h-24 xs:h-32 w-full rounded-xl overflow-hidden bg-surface flex items-center justify-center mb-3 xs:mb-4">
+                    <img
+                      src={rp.imageUrl}
+                      alt={rp.name}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 pointer-events-none select-none"
+                      draggable="false"
+                    />
+                  </div>
+                  <h3 className="font-semibold text-sm xs:text-base group-hover:text-primary transition-colors truncate">{rp.name}</h3>
+                  <p className="text-xs xs:text-sm text-muted-foreground mt-0.5 xs:mt-1 line-clamp-1">{rp.tagline}</p>
                 </div>
-                <h3 className="font-semibold group-hover:text-primary transition-colors">{rp.name}</h3>
-                <p className="text-sm text-muted-foreground mt-1">{rp.tagline}</p>
-                <p className="text-lg font-bold mt-2">{formatPrice(rp.price)}</p>
+                <p className="text-base xs:text-lg font-bold mt-2">{formatPrice(rp.price)}</p>
               </Link>
             ))}
           </div>

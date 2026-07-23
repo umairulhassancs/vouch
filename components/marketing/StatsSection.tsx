@@ -26,24 +26,24 @@ export function StatsSection() {
   const icons = [Package, Shield, Star];
 
   return (
-    <section ref={ref} className="relative py-16 border-y border-border/30">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+    <section ref={ref} className="relative py-8 xs:py-12 sm:py-16 border-y border-border/30">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-3 gap-3 sm:gap-8">
           {heroStats.map((stat, i) => {
             const Icon = icons[i];
             return (
-              <div key={stat.label} className="flex flex-col items-center text-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
-                  <Icon className="w-5 h-5 text-primary" />
+              <div key={stat.label} className="flex flex-col items-center text-center gap-1.5 sm:gap-3">
+                <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-primary/10 flex items-center justify-center">
+                  <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                 </div>
-                <div className="text-4xl sm:text-5xl font-bold font-[family-name:var(--font-display)] tracking-tight">
+                <div className="text-xl xs:text-2xl sm:text-4xl md:text-5xl font-bold font-[family-name:var(--font-display)] tracking-tight">
                   <AnimatedCounter
                     value={stat.value}
                     suffix={stat.suffix}
                     inView={inView}
                   />
                 </div>
-                <p className="text-sm text-muted-foreground">{stat.label}</p>
+                <p className="text-[10px] xs:text-xs sm:text-sm text-muted-foreground font-medium">{stat.label}</p>
               </div>
             );
           })}

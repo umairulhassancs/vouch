@@ -40,36 +40,47 @@ export default function PricingPage() {
         <h2 className="text-2xl font-bold font-[family-name:var(--font-display)] text-center mb-10">
           Hardware — One-Time Purchase
         </h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {products.map((product) => (
             <div
               key={product.slug}
-              className="p-5 rounded-2xl bg-surface-elevated border border-border/50 hover:border-primary/30 transition-all text-center flex flex-col items-center"
+              className="p-3 xs:p-5 rounded-2xl bg-surface-elevated border border-border/50 hover:border-primary/30 transition-all text-center flex flex-col items-center justify-between"
             >
-              <div className="h-24 w-24 rounded-xl overflow-hidden bg-surface flex items-center justify-center mb-3">
-                <img
-                  src={product.imageUrl}
-                  alt={product.name}
-                  className="w-full h-full object-cover pointer-events-none select-none"
-                  draggable="false"
-                />
+              <div className="flex flex-col items-center w-full">
+                <div className="h-16 w-16 xs:h-24 xs:w-24 rounded-xl overflow-hidden bg-surface flex items-center justify-center mb-2 xs:mb-3">
+                  <img
+                    src={product.imageUrl}
+                    alt={product.name}
+                    className="w-full h-full object-cover pointer-events-none select-none"
+                    draggable="false"
+                  />
+                </div>
+                <h3 className="font-semibold text-sm xs:text-lg mb-0.5 xs:mb-1 truncate w-full">{product.name}</h3>
+                <p className="text-[11px] xs:text-sm text-muted-foreground mb-3 xs:mb-4 line-clamp-1 w-full">{product.tagline}</p>
+                <div className="flex items-baseline justify-center gap-1.5 xs:gap-2 mb-3 xs:mb-4">
+                  <span className="text-base xs:text-2xl font-bold">{formatPrice(product.price)}</span>
+                  {product.originalPrice && (
+                    <span className="text-xs xs:text-sm text-muted-foreground line-through">
+                      {formatPrice(product.originalPrice)}
+                    </span>
+                  )}
+                </div>
               </div>
-              <h3 className="font-semibold text-lg mb-1">{product.name}</h3>
-              <p className="text-sm text-muted-foreground mb-4">{product.tagline}</p>
-              <div className="flex items-baseline justify-center gap-2 mb-4">
-                <span className="text-2xl font-bold">{formatPrice(product.price)}</span>
-                {product.originalPrice && (
-                  <span className="text-sm text-muted-foreground line-through">
-                    {formatPrice(product.originalPrice)}
-                  </span>
-                )}
-              </div>
-              <button
-                onClick={() => addItem(product)}
-                className="w-full py-2.5 bg-primary/10 text-primary rounded-xl text-sm font-semibold hover:bg-primary/20 transition-all cursor-pointer"
-              >
-                Add to Cart
-              </button>
+              {product.comingSoon ? (
+                <button
+                  onClick={() => alert(`${product.name} is coming soon and is not available for purchase yet!`)}
+                  className="w-full py-1.5 xs:py-2.5 bg-muted text-muted-foreground border border-border rounded-lg xs:rounded-xl text-xs xs:text-sm font-semibold hover:bg-muted/80 transition-all cursor-pointer"
+                >
+                  Coming Soon
+                </button>
+              ) : (
+                <button
+                  onClick={() => addItem(product)}
+                  className="w-full py-1.5 xs:py-2.5 bg-primary/10 text-primary rounded-lg xs:rounded-xl text-xs xs:text-sm font-semibold hover:bg-primary/20 transition-all cursor-pointer"
+                >
+                  Add to Cart
+                </button>
+              )}
             </div>
           ))}
         </div>
