@@ -51,10 +51,10 @@ export function HowItWorksSection() {
           <span className="inline-block px-4 py-1.5 rounded-full bg-teal/10 border border-teal/20 text-sm text-teal font-medium mb-6">
             Simple as 1-2-3
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-display)] tracking-tight mb-4">
+          <h2 className="text-xl xs:text-2xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-display)] tracking-tight mb-4">
             How Vouch Works
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-xs xs:text-sm sm:text-lg max-w-2xl mx-auto">
             Three simple steps between losing something and getting it back.
           </p>
         </div>
